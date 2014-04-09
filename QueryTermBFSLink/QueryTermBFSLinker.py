@@ -40,15 +40,22 @@ class QueryTermBFSLinkerC(BfsQueryFreebaseC):
         DespLm = LmBaseC(desp)
         
         
+        print "q[%s] obj [%s] get [%d] in name [%d] in desp" %(query,
+                                                               FbObj.GetId().encode('utf-8','ignore'),
+                                                               len(NameLm.hTermTF),
+                                                               len(DespLm.hTermTF))
+        
         NameFeatureName = json.dumps(lPath + ['name'])
         for term in NameLm.hTermTF:
             ThisExpTerm = deepcopy(expterm)
+            ThisExpTerm.term = term
             ThisExpTerm.hFeature[NameFeatureName] = NameLm.GetTFProb(term)
             print >> self.QTermOut, ThisExpTerm.dump()
         
         DespFeatureName = json.dumps(lPath + ['desp'])
         for term in DespLm.hTermTF:
             ThisExpTerm = deepcopy(expterm)
+            ThisExpTerm.term = term
             ThisExpTerm.hFeature[DespFeatureName] = NameLm.GetTFProb(term)
             print >> self.QTermOut, ThisExpTerm.dump()          
         
