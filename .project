@@ -6,6 +6,7 @@
 		<project>cxPyLib</project>
 		<project>Geektools</project>
 		<project>GoogleAPI</project>
+		<project>QueryExpansion</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
