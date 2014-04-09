@@ -57,7 +57,7 @@ class QueryTermBFSLinkerC(BfsQueryFreebaseC):
         for term in DespLm.hTermTF:
             ThisExpTerm = deepcopy(expterm)
             ThisExpTerm.term = term
-            ThisExpTerm.hFeature[DespFeatureName] = NameLm.GetTFProb(term)
+            ThisExpTerm.hFeature[DespFeatureName] = DespLm.GetTFProb(term)
             print >> self.QTermOut, ThisExpTerm.dump()          
         
         return True
