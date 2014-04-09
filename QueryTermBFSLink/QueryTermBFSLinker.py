@@ -8,7 +8,7 @@ import site
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib/')
 site.addsitedir('/bos/usr0/cx/PyCode/GoogleAPI/')
 site.addsitedir('/bos/usr0/cx/PyCode/QueryExpansion')
-from cxBase.base import cxConf,cxBaseC
+from cxBase.base import cxConf,cxBaseC,DiscardNonAlphaNonDigit
 import json
 from GoogleFreebaseAPI.BfsQueryFreebase import *
 from base.ExpTerm import *
@@ -33,8 +33,8 @@ class QueryTermBFSLinkerC(BfsQueryFreebaseC):
         expterm.query = query
         
         
-        name = FbObj.GetName().encode('ascii','replace')
-        desp = FbObj.GetDesp().encode('ascii','replace') #TF it?
+        name = DiscardNonAlphaNonDigit(FbObj.GetName().encode('ascii','replace')).lower()
+        desp = DiscardNonAlphaNonDigit(FbObj.GetDesp().encode('ascii','replace')).lower() #TF it?
         
         NameLm = LmBaseC(name)
         DespLm = LmBaseC(desp)
