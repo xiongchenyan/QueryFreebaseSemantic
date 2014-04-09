@@ -44,7 +44,8 @@ class QueryTermBFSLinkerC(BfsQueryFreebaseC):
                                                                FbObj.GetId().encode('utf-8','ignore'),
                                                                len(NameLm.hTermTF),
                                                                len(DespLm.hTermTF))
-        
+        print "name[%s] desp [%s]" %(name.encode('utf-8','ignore'),
+                                     desp.encode('utf-8','ignore'))
         NameFeatureName = json.dumps(lPath + ['name'])
         for term in NameLm.hTermTF:
             ThisExpTerm = deepcopy(expterm)
