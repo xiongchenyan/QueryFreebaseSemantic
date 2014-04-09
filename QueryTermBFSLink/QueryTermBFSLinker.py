@@ -33,8 +33,8 @@ class QueryTermBFSLinkerC(BfsQueryFreebaseC):
         expterm.query = query
         
         
-        name = FbObj.GetName()
-        desp = FbObj.GetDesp() #TF it?
+        name = FbObj.GetName().encode('ascii','replace')
+        desp = FbObj.GetDesp().encode('ascii','replace') #TF it?
         
         NameLm = LmBaseC(name)
         DespLm = LmBaseC(desp)
