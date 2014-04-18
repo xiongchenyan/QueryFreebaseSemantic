@@ -63,12 +63,14 @@ class QueryTermBFSLinkerC(BfsQueryFreebaseC):
         return True
     
     
-    def dump(self):
-        super(QueryTermBFSLinkerC,self).dump()
+#     def dump(self):
+#         super(QueryTermBFSLinkerC,self).dump()
+#         self.QTermOut.close()
+#         return True
+
+    def CleanUp(self):
+        super(QueryTermBFSLinkerC,self).CleanUp()
         self.QTermOut.close()
-        return True
-
-
 
 
         
@@ -80,7 +82,7 @@ def QueryTermBFSLinkerUnitRun(ConfIn):
     for line in open(InName):
         qid,query = line.strip().split('\t')
         BFSer.BFS(qid,query)
-    BFSer.dump()
+    BFSer.CleanUp()
     return True
         
            
