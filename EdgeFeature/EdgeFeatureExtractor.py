@@ -30,7 +30,7 @@ class EdgeFeatureExtractorC(cxBaseC):
     
     def SetConf(self,ConfIn):
         conf = cxConf(ConfIn)
-        self.OutDir = conf.GetConf('outdir')
+        self.OutDir = conf.GetConf('out')
         if not os.path.isdir(self.OutDir):
             os.makedirs(self.OutDir)
             
