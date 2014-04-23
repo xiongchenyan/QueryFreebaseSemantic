@@ -45,6 +45,7 @@ for line in open(sys.argv[1]):
     for feature in ExpTerm.hFeature:
         if not ExpTermC.IsPRAFeature(feature):
             continue
+        print "working on feature [%s]" %(feature)
         lPath = json.loads(feature)
         for edge in lPath:
             if edge in hStopEdge:
