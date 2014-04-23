@@ -21,8 +21,10 @@ site.addsitedir('/bos/usr0/cx/PyCode/GoogleAPI')
 from cxBase.base import cxConf, cxBaseC
 from EdgeFeatureBase import EdgeFeatureC
 from EdgeFeatureExtractor import *
-
 from FreebaseDump.FbDumpBasic import *
+
+import math
+
 class EdgeWiseFeatureExtractorC(EdgeFeatureExtractorC):
     
 
@@ -65,6 +67,6 @@ class EdgeWiseFeatureExtractorC(EdgeFeatureExtractorC):
    
     def ExtractEdgeCntFeature(self,lvCol):
         hFeature = {}
-        hFeature['EdgeCnt'] = len(lvCol)       
+        hFeature['EdgeCnt'] = math.log(len(lvCol))       
         return hFeature       
         
