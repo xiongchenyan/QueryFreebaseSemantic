@@ -42,6 +42,21 @@ class EdgeOccurFetcherC(cxBaseC):
     
     
     
+    def GetAllInstanceObj(self,lvCol):
+        MaxInstance = 500
+        lObj = []
+        for vCol in lvCol:
+            if len(lObj) > MaxInstance:
+                break
+            if IsInstanceEdge(vCol[1]):
+                ObjId = GetId(vCol[2])
+                if "" != ObjId:
+                    lObj.append(vCol[2])
+        return lObj
+                
+        
+        
+    
     
     def Process(self):
         
@@ -55,8 +70,7 @@ class EdgeOccurFetcherC(cxBaseC):
         for lvCol in FbDumpReader:
 #             print "read obj dump str:"
 #             print json.dumps(lvCol)
-#             print "-------------------\n"
-            
+#             print "-------------------\n"          
             
             for vCol in lvCol:
                 
@@ -69,6 +83,21 @@ class EdgeOccurFetcherC(cxBaseC):
                         EdgeCnt += 1
 #                 else:
 #                     print "edge [%s] not needed" %(vCol[1])
+                        
+                        
+            #add: output instance occur of cotype/edge            
+            
+            
+            if ('cotype/' + lvCol[0][0]) in self.hTargetEdge:
+                edge = 'cotype/' + lvCol[0][0]
+                print "get target edge [%s]" %(edge)
+                lObjId = self.GetAllInstanceObj(lvCol)
+                for i in range(len(lObjId)):
+                    for j in range(len(lObjId)):
+                        if i == j:
+                            continue
+                        print >>out, edge + "\t" + lObjId[i] + "\t" + lObjId[j]
+                        EdgeCnt += 1
                         
             cnt += 1
             if 0 == cnt % 100000:

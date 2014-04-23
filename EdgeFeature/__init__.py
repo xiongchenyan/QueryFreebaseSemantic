@@ -50,3 +50,17 @@ thus:
     Group 1: just by edge:obj-obj file
     Group 2,3: traverse dumps, record useful information
 '''
+
+
+
+'''
+co-type edge occur:
+    total different, co-type is to fetch all its instance, and get a n^2 occurance
+        (limit to 200*200)
+for co-type feature:
+    Group 1: EdgeCnt same; category: co-type+domain; Edge lvl: same
+    Group 2: same, just domain of cotype edge needs attention
+    Group 3: same
+
+
+'''
