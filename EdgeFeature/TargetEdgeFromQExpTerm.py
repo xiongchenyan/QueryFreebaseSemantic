@@ -52,12 +52,16 @@ if 3 != len(sys.argv):
 
 hEdge = {}
 
+cnt = 0
 for line in open(sys.argv[1]):
     ExpTerm = ExpTermC(line.strip())
+    cnt += 1
+    if 0 == (cnt % 10000):
+        print "process [%d] line" %(cnt)
     for feature in ExpTerm.hFeature:
         if not ExpTermC.IsPRAFeature(feature):
             continue
-        print "working on feature [%s]" %(feature)
+#         print "working on feature [%s]" %(feature)
         lEdge = SegEdgeFromPRAFeature(feature)
         for edge in lEdge:
             if edge in hStopEdge:
@@ -65,7 +69,7 @@ for line in open(sys.argv[1]):
             if not edge in hEdge:                
                 hEdge[edge] = 0
             hEdge[edge] += 1
-            print "get edge [%s]" %(edge)
+#             print "get edge [%s]" %(edge)
             
 
 out = open(sys.argv[2],'w')
