@@ -53,18 +53,22 @@ class EdgeOccurFetcherC(cxBaseC):
         cnt = 0
         EdgeCnt = 0
         for lvCol in FbDumpReader:
-            print "read obj dump str:"
-            print json.dumps(lvCol)
-            print "-------------------\n"
+#             print "read obj dump str:"
+#             print json.dumps(lvCol)
+#             print "-------------------\n"
             
             
             for vCol in lvCol:
+                
                 if vCol[1] in self.hTargetEdge:
+                    print "get target edge [%s]" %(vCol[1])
                     ObjA = GetId(vCol[0])
                     ObjB = GetId(vCol[2])
                     if ("" != ObjA) & ("" != ObjB):
                         print >>out, vCol[1] + "\t" + ObjA + "\t" + ObjB
                         EdgeCnt += 1
+                else:
+                    print "edge [%s] not needed" %(vCol[1])
                         
             cnt += 1
             if 0 == cnt % 100000:
