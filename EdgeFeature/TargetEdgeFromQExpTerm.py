@@ -31,6 +31,18 @@ for each feature:
 '''
 
 
+def SegEdgeFromPRAFeature(feature):
+    lPath = json.loads(feature)
+    lEdge = []
+    for item in lPath:
+        if type(item) == list:
+            for edge in item:
+                lEdge.append(edge)
+        else:
+            lEdge.append(str(item))
+    return lEdge
+
+
 hStopEdge = set(['search','desp','name','values'])
 
 if 3 != len(sys.argv):
@@ -46,11 +58,12 @@ for line in open(sys.argv[1]):
         if not ExpTermC.IsPRAFeature(feature):
             continue
         print "working on feature [%s]" %(feature)
-        lPath = json.loads(feature)
-        for edge in lPath:
+        lEdge = SegEdgeFromPRAFeature(feature)
+        for edge in lEdge:
             if edge in hStopEdge:
                 continue
             if not edge in hEdge:
+                print "get edge [%s]" %(edge)
                 hEdge[edge] = 0
             hEdge[edge] += 1
             
