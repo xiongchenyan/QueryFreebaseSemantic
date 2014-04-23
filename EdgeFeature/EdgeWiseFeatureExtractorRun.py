@@ -8,6 +8,7 @@ run edge wise feature extraction
 
 import site
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')
+site.addsitedir('/bos/usr0/cx/PyCode/GoogleAPI')
 site.addsitedir('/bos/usr0/cx/PyCode/QueryFreebaseSemantic')
 from EdgeWiseFeatureExtractor import *
 import sys

@@ -16,7 +16,7 @@ just need the edge\tobj\tobj file
 
 import site
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')
-
+site.addsitedir('/bos/usr0/cx/PyCode/GoogleAPI')
 
 from cxBase.base import cxConf, cxBaseC
 from EdgeFeatureBase import EdgeFeatureC
