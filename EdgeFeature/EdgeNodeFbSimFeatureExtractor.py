@@ -277,6 +277,10 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         hFeature = {}
         
         EdgeDomain = GetDomain(edge)
+        
+        if 'cotype' in EdgeDomain:
+            EdgeDomain = EdgeDomain.replace('cotype','')
+        
         score = 0
         
         for ObjInforA,ObjInforB in lObjPair:
@@ -296,6 +300,8 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         hFeature = {}
         
         EdgeDomain = GetDomain(edge)
+        if 'cotype' in EdgeDomain:
+            EdgeDomain = EdgeDomain.replace('cotype','')
         score = 0
         
         for A,B in lObjPair:

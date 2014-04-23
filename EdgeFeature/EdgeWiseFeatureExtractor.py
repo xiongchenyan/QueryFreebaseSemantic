@@ -55,7 +55,6 @@ class EdgeWiseFeatureExtractorC(EdgeFeatureExtractorC):
         edge = lvCol[0][0]
         EdgeDomain = GetDomain(edge)
         hFeature['EdgeDomain' + EdgeDomain] = 1
-       
         return hFeature
         
     def ExtractEdgeLvlFeature(self,lvCol):
