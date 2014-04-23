@@ -158,7 +158,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
             os.makedirs(self.ObjInforDir)
             
         conf =cxConf(ConfIn)
-        self.MaxOccurPerEdge = conf.GetConf('maxoccurperedge',self.MaxOccurPerEdge)
+        self.MaxOccurPerEdge = int(conf.GetConf('maxoccurperedge',self.MaxOccurPerEdge))
         
         
         
