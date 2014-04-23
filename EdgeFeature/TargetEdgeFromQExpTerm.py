@@ -67,9 +67,9 @@ for line in open(sys.argv[1]):
             hEdge[edge] += 1
             print "get edge [%s]" %(edge)
             
-            
+
 out = open(sys.argv[2],'w')
 pickle.dump(hEdge,out)
 out.close()
            
-
+print "finished, [%d] edge" %(len(hEdge))
