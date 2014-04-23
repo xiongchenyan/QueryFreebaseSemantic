@@ -25,7 +25,7 @@ class EdgeFeatureC(cxFeatureC):
         
         
     def dumps(self):
-        return self.edge + '\t' + super(EdgeFeatureC,self)
+        return self.edge + '\t' + super(EdgeFeatureC,self).dumps()
     
     def loads(self,line):
         vCol = line.split('\t')

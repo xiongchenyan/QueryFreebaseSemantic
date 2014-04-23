@@ -41,7 +41,7 @@ class EdgeFeatureExtractorC(cxBaseC):
         
     @staticmethod
     def ShowConf():
-        print "outdir\nin\nfbdumpin\nfaccdir"
+        print "out\nin\nfbdumpin\nfaccdir"
     
     def Extract(self,DumpDisk = False):
         
