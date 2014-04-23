@@ -62,10 +62,10 @@ for line in open(sys.argv[1]):
         for edge in lEdge:
             if edge in hStopEdge:
                 continue
-            if not edge in hEdge:
-                print "get edge [%s]" %(edge)
+            if not edge in hEdge:                
                 hEdge[edge] = 0
             hEdge[edge] += 1
+            print "get edge [%s]" %(edge)
             
             
 out = open(sys.argv[2],'w')
