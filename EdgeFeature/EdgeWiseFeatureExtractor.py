@@ -33,6 +33,8 @@ class EdgeWiseFeatureExtractorC(EdgeFeatureExtractorC):
     
     
     def ExtractOneEdge(self,lvCol):
+        print "extracting for edge [%s]" %(lvCol[0][0])
+        
         EdgeFeature = EdgeFeatureC()
         EdgeFeature.edge = lvCol[0][0]
         hEdgeDomainFeature = self.ExtractEdgeDomainFeature(lvCol)
@@ -41,7 +43,7 @@ class EdgeWiseFeatureExtractorC(EdgeFeatureExtractorC):
         
         EdgeFeature.AddFeature(dict(hEdgeDomainFeature.items() + hEdgeCntFeature.items()
                                     +hEdgeLvlFeature.items()))
-        
+        print "features: [%s]" %(EdgeFeature.dumps())
         return EdgeFeature
         
    

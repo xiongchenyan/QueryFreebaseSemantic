@@ -55,6 +55,7 @@ class EdgeFeatureExtractorC(cxBaseC):
             EdgeFeature = self.ExtractOneEdge(lvCol)
             lEdgeFeature.append(EdgeFeature)
             if DumpDisk:
+                print "dumping feature for [%s]" %(EdgeFeature.edge)
                 print >>out, EdgeFeature.dumps()
         if DumpDisk:
             out.close()
