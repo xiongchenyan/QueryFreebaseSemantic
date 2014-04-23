@@ -67,8 +67,8 @@ class EdgeOccurFetcherC(cxBaseC):
                     if ("" != ObjA) & ("" != ObjB):
                         print >>out, vCol[1] + "\t" + ObjA + "\t" + ObjB
                         EdgeCnt += 1
-                else:
-                    print "edge [%s] not needed" %(vCol[1])
+#                 else:
+#                     print "edge [%s] not needed" %(vCol[1])
                         
             cnt += 1
             if 0 == cnt % 100000:
