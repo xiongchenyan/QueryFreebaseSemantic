@@ -102,7 +102,7 @@ class FbDumpObjInforC(object):
         except IOError:
             print "obj's infor dump [%s] file open failed" %(InName)
             return False
-        self.ObjId = ntpath.basename(InName)
+        self.ObjId = FbDumpObjInforC.ReverseIdFromFName(InName)
         self.hNotableType = pickle.load(InFile)
         self.DespLm.hTermTF = pickle.load(InFile)
         self.DespLm.CalcLen()
@@ -112,9 +112,11 @@ class FbDumpObjInforC(object):
     
     
     def GetFname(self):
-        return self.ObjId[:200]
+        return self.ObjId[:200].replace('/','_')
         
-    
+    @staticmethod
+    def ReverseIdFromFName(self,FName):
+        return ntpath.basename(FName).replace('_','/')
     
     def FormFromObjDump(self,lObjvCol):
         #fill the attributes
@@ -215,7 +217,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
             print "read target obj [%s]" %(ThisObjId)
             print "start making dump infor"
             ObjInfor = FbDumpObjInforC(lvColObj)
-
+            print "get:%s" %(ObjInfor.dumps())
             OutName = self.OutDir + "/" + ObjInfor.GetFname()
             ObjInfor.dump(OutName)
             cnt += 1
