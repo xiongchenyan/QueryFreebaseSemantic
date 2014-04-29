@@ -54,6 +54,7 @@ import os
 import pickle
 import ntpath
 from copy import deepcopy
+import json
 class FbDumpObjInforC(object):
     #the class to keep object infor:
         #Lm of desp
@@ -91,6 +92,10 @@ class FbDumpObjInforC(object):
         return True
     
     
+    def dumps(self):
+        res = json.dumps(self.ObjId) + "\n" + json.dumps(self.DespLm.hTermTF)
+        res += "\n" + json.dumps(self.DomainLm.hTermTF) + "\n" + json.dumps(self.hNotableType)
+    
     def load(self,InName):
         try:
             InFile = open(InName)
@@ -114,6 +119,8 @@ class FbDumpObjInforC(object):
     def FormFromObjDump(self,lObjvCol):
         #fill the attributes
         #tbd: check how the notable type in dump is
+        self.ObjId = lObjvCol[0][0]
+        
         
         NotableType = GetDomain(GetNotableType(lObjvCol))
         self.hNotableType[NotableType] = True
@@ -156,7 +163,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
     @staticmethod
     def ShowConf():
         EdgeFeatureExtractorC.ShowConf()
-        print "maxoccurperedge\mctf"
+        print "maxoccurperedge\nctf"
         
     def SetConf(self,ConfIn):
         super(EdgeNodeFbSimFeatureExtractorC,self).SetConf(ConfIn)
@@ -205,9 +212,10 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
             ThisObjId = lvColObj[0][0]
             if not ThisObjId in self.hTargetObj:
                 continue
-            
+            print "read target obj [%s]" %(ThisObjId)
+            print "start making dump infor"
             ObjInfor = FbDumpObjInforC(lvColObj)
-            print "read target obj [%s]" %(ObjInfor.ObjId)
+
             OutName = self.OutDir + "/" + ObjInfor.GetFname()
             ObjInfor.dump(OutName)
             cnt += 1
