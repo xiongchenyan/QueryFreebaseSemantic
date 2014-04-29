@@ -218,7 +218,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
             print "start making dump infor"
             ObjInfor = FbDumpObjInforC(lvColObj)
             print "get:%s" %(ObjInfor.dumps())
-            OutName = self.OutDir + "/" + ObjInfor.GetFname()
+            OutName = self.ObjInforDir + "/" + ObjInfor.GetFname()
             ObjInfor.dump(OutName)
             cnt += 1
         
@@ -245,7 +245,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         
         EdgeFeature.edge = lvCol[0][0]
         
-        EdgeFeature.AddFeature(self.ExtractObjNotableCntFeature(lObjPair,EdgeFeature.edge))
+#         EdgeFeature.AddFeature(self.ExtractObjNotableCntFeature(lObjPair,EdgeFeature.edge))
         EdgeFeature.AddFeature(self.ExtractObjTextSimFeature(lObjPair))
         EdgeFeature.AddFeature(self.ExtractObjTypeProbFeature(lObjPair,EdgeFeature.edge))
         
@@ -273,7 +273,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
     def ReadOneObjInfor(self,ObjId):
         ObjInfor = FbDumpObjInforC()
         ObjInfor.ObjId = ObjId
-        if not ObjInfor.load(self.OutDir + "/" + ObjInfor.GetFname()):
+        if not ObjInfor.load(self.ObjInforDir + "/" + ObjInfor.GetFname()):
             ObjInfor.clear()
         return ObjInfor
         
