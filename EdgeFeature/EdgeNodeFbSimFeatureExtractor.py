@@ -124,7 +124,7 @@ class FbDumpObjInforC(object):
         #tbd: check how the notable type in dump is
         self.ObjId = lObjvCol[0][0]
         
-        NotableType = GetDomain(GetNotableType(lObjvCol))
+        NotableType = GetNotableType(lObjvCol)
         self.hNotableType[NotableType] = True
         
         Desp = GetDesp(lObjvCol)
