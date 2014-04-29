@@ -25,6 +25,11 @@ do:
 
 '''
 
+'''
+4.29 tbd:
+improve the cnt-correlation to PMI
+'''
+
 
 import site
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')

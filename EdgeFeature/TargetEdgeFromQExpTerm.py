@@ -31,16 +31,7 @@ for each feature:
 '''
 
 
-def SegEdgeFromPRAFeature(feature):
-    lPath = json.loads(feature)
-    lEdge = []
-    for item in lPath:
-        if type(item) == list:
-            for edge in item:
-                lEdge.append(edge)
-        else:
-            lEdge.append(str(item))
-    return lEdge
+
 
 
 hStopEdge = set(['search','desp','name','values'])

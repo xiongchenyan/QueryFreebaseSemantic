@@ -32,6 +32,11 @@ then need two step:
 '''
 
 
+'''
+4.29 add idf in cosine sim between obj desp
+
+'''
+
 
 import site
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')
@@ -40,6 +45,7 @@ site.addsitedir('/bos/usr0/cx/PyCode/QueryFreebaseSemantic')
 from cxBase.base import *
 from EdgeFeature.EdgeFeatureBase import *
 from EdgeFeature.EdgeFeatureExtractor import *
+from IndriRelate.CtfLoader import TermCtfC
 from cxBase.KeyFileReader import KeyFileReaderC
 from IndriRelate.IndriInferencer import LmBaseC
 from FreebaseDump.FbDumpBasic import *
@@ -144,12 +150,13 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         self.hTargetObj = {}
         self.ObjInforDir = ""
         self.MaxOccurPerEdge = 1000
+        self.CtfCenter = TermCtfC()
         
         
     @staticmethod
     def ShowConf():
         EdgeFeatureExtractorC.ShowConf()
-        print "maxoccurperedge"
+        print "maxoccurperedge\mctf"
         
     def SetConf(self,ConfIn):
         super(EdgeNodeFbSimFeatureExtractorC,self).SetConf(ConfIn)
@@ -160,7 +167,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         conf =cxConf(ConfIn)
         self.MaxOccurPerEdge = int(conf.GetConf('maxoccurperedge',self.MaxOccurPerEdge))
         
-        
+        self.CtfCenter.Load((conf.GetConf('ctf')))
         
         
     
@@ -266,7 +273,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         hFeature = {}
         score = 0
         for ObjInforA,ObjInforB in lObjPair:
-            score += ObjInforA.DespLm * ObjInforB.DespLm
+            score += LmBaseC.TfIdfCosine(ObjInforA.DespLm,  ObjInforB.DespLm)
         score /= len(lObjPair)
         hFeature['AvgObjTextSim'] = score
         

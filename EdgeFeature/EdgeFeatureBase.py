@@ -38,7 +38,11 @@ class EdgeFeatureC(cxFeatureC):
         return EdgeFeatureC(self.dumps())
     
     
-        
+    def Key(self):
+        return self.edge
     
+    
+    
+
     
     
