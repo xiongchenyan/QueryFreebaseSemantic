@@ -95,6 +95,7 @@ class FbDumpObjInforC(object):
     def dumps(self):
         res = json.dumps(self.ObjId) + "\n" + json.dumps(self.DespLm.hTermTF)
         res += "\n" + json.dumps(self.DomainLm.hTermTF) + "\n" + json.dumps(self.hNotableType)
+        return res
     
     def load(self,InName):
         try:
@@ -122,7 +123,6 @@ class FbDumpObjInforC(object):
         #fill the attributes
         #tbd: check how the notable type in dump is
         self.ObjId = lObjvCol[0][0]
-        
         
         NotableType = GetDomain(GetNotableType(lObjvCol))
         self.hNotableType[NotableType] = True
