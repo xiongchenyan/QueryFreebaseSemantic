@@ -28,6 +28,8 @@ do:
 '''
 4.29 tbd:
 improve the cnt-correlation to PMI
+4.30
+implemented tbd: test and run
 '''
 
 
@@ -52,11 +54,14 @@ import math
 class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
     def Init(self):
         self.UWSize = 100
-        self.hEdge = {} #edge -> cnt in occur
+#         self.hEdge = {} #edge -> cnt in occur
         self.MaxOccurPerEdge = 1000
-        self.hObjPairToEdge = {}
-        self.hEdgeCorCnt = {}
-        self.hEdgeUWCorCnt = {}
+#         self.hObjPairToEdge = {}
+#         self.hEdgeCorCnt = {}
+#         self.hEdgeUWCorCnt = {}
+        self.hObjCnt = {} #cnt in facc
+        self.hObjPairCnt = {} #cnt + uwcnt []
+        self.FaccTotal = 0.0
         
     @staticmethod
     def ShowConf():
@@ -79,14 +84,10 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
         EdgeObjReader.open(self.EdgeObjIn)
         for lvCol in EdgeObjReader:
             lvCol = lvCol[:self.MaxOccurPerEdge]
-            self.hEdge[lvCol[0][0]] = len(lvCol)
-            self.hEdgeCorCnt[lvCol[0][0]] = 0
-            self.hEdgeUWCorCnt[lvCol[0][0]] = 0
             for vCol in lvCol:
-                key = '\t'.join(vCol[1:])
-                if not key in self.hObjPairToEdge:
-                    self.hObjPairToEdge[key] = []
-                self.hObjPairToEdge[key].append(vCol[0])
+                self.hObjCnt[vCol[1]] = 0
+                self.hObjCnt[vCol[2]] = 0
+                self.hObjCnt[vCol[1] + "\t" + vCol[2]] = [0,0]    
         EdgeObjReader.close()      
         return True
     
@@ -108,24 +109,35 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
         #update for one facc
         
         #O(len(lFacc)^2)
-        
-        
+        self.FaccTotal += 1.0
+        lObj = []
+        lObjPair = []
+        lUWObjPair = []
         for i in range(len(lFacc)):
+            if not lFacc[i] in lObj:
+                if lFacc[i] in self.hObjCnt:
+                    lObj.append(lFacc[i]) 
             for j in range(len(lFacc)):
                 if i == j:
                     continue
                 
                 AnoA = lFacc[i]
                 AnoB = lFacc[j]
-                
                 Key = AnoA.ObjId + "\t" + AnoB.ObjId
-                if not Key in self.hObjPairToEdge:
+                if not Key in self.hObjPairCnt:
                     continue
-                edge = self.hObjPairToEdge[Key]
-                self.hEdgeCorCnt[edge] += 1
+                if not Key in lObjPair:
+                    lObjPair.append(Key)
                 if math.fabs(AnoA.st - AnoB.st) <= self.UWSize:
-                    self.hEdgeUWCorCnt[edge] += 1
+                    if not Key in lUWObjPair:
+                        lUWObjPair.append(Key)
         
+        for Obj in lObj:
+            self.hObjCnt[Obj] += 1
+        for Key in lObjPair:
+            self.hObjPairCnt[Key][0] += 1
+        for Key in lUWObjPair:
+            self.hObjPairCnt[Key][1] += 1
         return True
     
     
@@ -141,30 +153,50 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
         edge = lvCol[0][0]
         EdgeFeature.edge = edge
         
-        EdgeFeature.AddFeature(self.ExtractFaccCor(edge))
-        EdgeFeature.AddFeature(self.ExtractFaccUWCor(edge))
+        EdgeFeature.AddFeature(self.ExtractFaccCor(lvCol))
+        EdgeFeature.AddFeature(self.ExtractFaccUWCor(lvCol))
         
         return EdgeFeature
     
     
-    def ExtractFaccCor(self,edge):
+    def ExtractFaccCor(self,lvCol):
         hFeature = {}
         score = 0
-        if edge in self.hEdgeCorCnt:
-            score = float(self.hEdgeCorCnt[edge]) / float(self.hEdge[edge])
+        
+        for vCol in lvCol:
+            ObjA = vCol[1]
+            ObjB = vCol[2]
+            score += self.CalcPmi(ObjA, ObjB, 0)
+        score /= float(len(lvCol))
         hFeature['AvgObjFaccCor'] = score 
         return hFeature
     
-    def ExtractFaccUWCor(self,edge):
+    def ExtractFaccUWCor(self,lvCol):
         hFeature = {}
         score = 0
-        if edge in self.hEdgeUWCorCnt:
-            score = float(self.hEdgeUWCorCnt[edge]) / float(self.hEdge[edge])
+        for vCol in lvCol:
+            ObjA = vCol[1]
+            ObjB = vCol[2]
+            score += self.CalcPmi(ObjA, ObjB, 1)
+        score /= float(len(lvCol))
         hFeature['AvgObjFaccUWCor'] = score 
         return hFeature
         
-        
-            
+    def CalcPmi(self,ObjA,ObjB,UseIndex = 0):    
+        PairKey = ObjA + "\t" + ObjB
+        pa = 1
+        pb = 1
+        pab = 1
+        if ObjA in self.hObjCnt:
+            pa = self.hObjCnt[ObjA]
+        if ObjB in self.hObjCnt:
+            pb = self.hObjCnt[ObjB]
+        if PairKey in self.hObjPairCnt:
+            pab = self.hObjPairCnt[PairKey][UseIndex]
+        pa /= self.FaccTotal
+        pb /= self.FaccTotal
+        pab /= self.FaccTotal
+        return PMI(pa,pb,pab)   
             
     def EdgeFeatureOutName(self):
         return self.OutDir + "/nodefaccsim"        
