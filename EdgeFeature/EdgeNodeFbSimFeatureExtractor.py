@@ -238,12 +238,14 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         
         
         lvCol = lvCol[:self.MaxOccurPerEdge]
-        
+       
         EdgeFeature = EdgeFeatureC()
-        
+        EdgeFeature.edge = lvCol[0][0]
+        print "extracting for [%s]" %(EdgeFeature.edge)
         lObjPair = self.ReadConnectObjInfor(lvCol)
         
-        EdgeFeature.edge = lvCol[0][0]
+        print "load [%d] obj pair" %(len(lObjPair))
+        
         
 #         EdgeFeature.AddFeature(self.ExtractObjNotableCntFeature(lObjPair,EdgeFeature.edge))
         EdgeFeature.AddFeature(self.ExtractObjTextSimFeature(lObjPair))
