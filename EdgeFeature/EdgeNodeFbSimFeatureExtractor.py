@@ -116,7 +116,7 @@ class FbDumpObjInforC(object):
         return self.ObjId[:200].replace('/','_')
         
     @staticmethod
-    def ReverseIdFromFName(self,FName):
+    def ReverseIdFromFName(FName):
         return ntpath.basename(FName).replace('_','/')
     
     def FormFromObjDump(self,lObjvCol):
@@ -158,7 +158,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         
         self.hTargetObj = {}
         self.ObjInforDir = ""
-        self.MaxOccurPerEdge = 1000
+        self.MaxOccurPerEdge = 100
         self.CtfCenter = TermCtfC()
         
         
@@ -219,7 +219,8 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
             ObjInfor = FbDumpObjInforC(lvColObj)
             print "get:%s" %(ObjInfor.dumps())
             OutName = self.ObjInforDir + "/" + ObjInfor.GetFname()
-            ObjInfor.dump(OutName)
+            if not os.path.isfile(OutName):
+                ObjInfor.dump(OutName)
             cnt += 1
         
         print "obj infor dumped, total [%d] obj" %(cnt)
