@@ -176,9 +176,9 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
             
         conf =cxConf(ConfIn)
         self.MaxOccurPerEdge = int(conf.GetConf('maxoccurperedge',self.MaxOccurPerEdge))
-        
+        print "start load term ctf"
         self.CtfCenter.Load((conf.GetConf('ctf')))
-        
+        print "term ctf load [%d] term" %(len(self.CtfCenter.hTermCtf))
         
     
             
