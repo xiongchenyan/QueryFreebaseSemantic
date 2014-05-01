@@ -208,6 +208,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         
         print "start make target obj infor from dump"
         FbDumpReader = FbDumpReaderC()
+        FbDumpReader.MaxLinePerKey = 10000
         FbDumpReader.open(self.FbDumpIn,'r')
         cnt = 0
         for lvColObj in FbDumpReader:
