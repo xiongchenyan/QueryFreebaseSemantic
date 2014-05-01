@@ -196,7 +196,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
             for EdgeObj in lEdgeObj:
                 self.hTargetObj[EdgeObj[1]] = True
                 self.hTargetObj[EdgeObj[2]] = True      
-        
+            del lEdgeObj[:]
         print "load target obj ids done [%d]" %(len(self.hTargetObj))
         return True
     
@@ -226,6 +226,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
             ObjInfor.dump(OutName)
             cnt += 1
             ObjInfor.clear()
+            del lvColObj[:] 
         print "obj infor dumped, total [%d] obj" %(cnt)
         return True
     

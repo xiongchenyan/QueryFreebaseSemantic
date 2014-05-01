@@ -81,6 +81,7 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
         #read and make hEdge, hObjPairToEdge
         print "start read edge obj"
         EdgeObjReader = KeyFileReaderC()
+        EdgeObjReader.MaxLinePerKey = self.MaxOccurPerEdge
         EdgeObjReader.open(self.EdgeObjIn)
         for lvCol in EdgeObjReader:
             lvCol = lvCol[:self.MaxOccurPerEdge]
@@ -88,6 +89,7 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
                 self.hObjCnt[vCol[1]] = 0
                 self.hObjCnt[vCol[2]] = 0
                 self.hObjCnt[vCol[1] + "\t" + vCol[2]] = [0,0]    
+            del lvCol[:]
         EdgeObjReader.close()      
         print "total [%d] obj" %(len(self.hObjCnt))
         return True
@@ -102,6 +104,7 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
         print "start read facc data"
         for lFacc in FaccReader:
             self.UpdateOneFacc(lFacc)
+            del lFacc[:]
             
         print "read facc data finished"        
         return True
