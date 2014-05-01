@@ -75,7 +75,7 @@ class FbDumpObjInforC(object):
         self.ObjId = ""
         self.DespLm.clear()
         self.DomainLm.clear()
-        self.hNotableType = {}
+        self.hNotableType.clear()
         
     
     def __init__(self,lObjvCol = []):
@@ -91,6 +91,7 @@ class FbDumpObjInforC(object):
         out.close()
         return True
     
+
     
     def dumps(self):
         res = json.dumps(self.ObjId) + "\n" + json.dumps(self.DespLm.hTermTF)
@@ -215,15 +216,16 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
             ThisObjId = lvColObj[0][0]
             if not ThisObjId in self.hTargetObj:
                 continue
-            print "read target obj [%s]" %(ThisObjId)
-            print "start making dump infor"
-            ObjInfor = FbDumpObjInforC(lvColObj)
-            print "get:%s" %(ObjInfor.dumps())
+            ObjInfor = FbDumpObjInforC()
+            ObjInfor.ObjId = ThisObjId
             OutName = self.ObjInforDir + "/" + ObjInfor.GetFname()
-            if not os.path.isfile(OutName):
-                ObjInfor.dump(OutName)
+            if os.path.isfile(OutName):
+                continue
+            print "read target obj [%s]" %(ThisObjId)
+            ObjInfor = FbDumpObjInforC(lvColObj)
+            ObjInfor.dump(OutName)
             cnt += 1
-        
+            ObjInfor.clear()
         print "obj infor dumped, total [%d] obj" %(cnt)
         return True
     

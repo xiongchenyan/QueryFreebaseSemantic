@@ -89,6 +89,7 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
                 self.hObjCnt[vCol[2]] = 0
                 self.hObjCnt[vCol[1] + "\t" + vCol[2]] = [0,0]    
         EdgeObjReader.close()      
+        print "total [%d] obj" %(len(self.hObjCnt))
         return True
     
     
@@ -109,18 +110,19 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
         #update for one facc
         
         #O(len(lFacc)^2)
+        print "working on facc [%s]" %(lFacc[0].DocNo)
         self.FaccTotal += 1.0
         lObj = []
         lObjPair = []
         lUWObjPair = []
         for i in range(len(lFacc)):
-            if not lFacc[i] in lObj:
-                if lFacc[i] in self.hObjCnt:
-                    lObj.append(lFacc[i]) 
+            if not lFacc[i].ObjId in lObj:
+                if lFacc[i].ObjId in self.hObjCnt:
+                    lObj.append(lFacc[i].ObjId) 
+                    print "[%s] appear" %(lFacc[i].ObjId)
             for j in range(len(lFacc)):
                 if i == j:
                     continue
-                
                 AnoA = lFacc[i]
                 AnoB = lFacc[j]
                 Key = AnoA.ObjId + "\t" + AnoB.ObjId
@@ -128,9 +130,11 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
                     continue
                 if not Key in lObjPair:
                     lObjPair.append(Key)
+                    print "[%s] pair appear" %(Key)
                 if math.fabs(AnoA.st - AnoB.st) <= self.UWSize:
                     if not Key in lUWObjPair:
                         lUWObjPair.append(Key)
+                        print "[%s] uw pair appear" %(Key)
         
         for Obj in lObj:
             self.hObjCnt[Obj] += 1
