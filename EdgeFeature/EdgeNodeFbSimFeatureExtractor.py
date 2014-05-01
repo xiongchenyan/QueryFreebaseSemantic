@@ -189,6 +189,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         #load target obj ids in edge-obj-obj to hTargetObj
         
         KeyReader = KeyFileReaderC()
+        KeyReader.MaxLinePerKey = self.MaxOccurPerEdge
         KeyReader.open(self.EdgeObjIn, 'r')
         print "start load target obj ids"
         for lEdgeObj in KeyReader:
@@ -209,7 +210,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         
         print "start make target obj infor from dump"
         FbDumpReader = FbDumpReaderC()
-        FbDumpReader.MaxLinePerKey = 10000
+        FbDumpReader.MaxLinePerKey = 1000
         FbDumpReader.open(self.FbDumpIn,'r')
         cnt = 0
         for lvColObj in FbDumpReader:

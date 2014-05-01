@@ -99,7 +99,7 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
         #read facc from FaccDir
         #update hEdgeCorCnt and hEdgeUWCorCnt
         
-        FaccReader = FaccReaderC()
+        FaccReader = FaccReaderC()        
         FaccReader.opendir(self.FaccDir)
         print "start read facc data"
         for lFacc in FaccReader:
