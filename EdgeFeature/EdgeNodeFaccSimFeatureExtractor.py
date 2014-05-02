@@ -55,7 +55,6 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
     def Init(self):
         self.UWSize = 100
 #         self.hEdge = {} #edge -> cnt in occur
-        self.MaxOccurPerEdge = 1000
 #         self.hObjPairToEdge = {}
 #         self.hEdgeCorCnt = {}
 #         self.hEdgeUWCorCnt = {}
@@ -71,7 +70,6 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
     def SetConf(self,ConfIn):
         super(EdgeNodeFaccSimFeatureExtractorC,self).SetConf(ConfIn)
         conf = cxConf(ConfIn)
-        self.MaxOccurPerEdge = int(conf.GetConf('maxoccurperedge',self.MaxOccurPerEdge))
         self.UWSize = int(conf.GetConf('uwsize',self.UWSize))
         
         return True
@@ -156,6 +154,7 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
     
     def ExtractOneEdge(self,lvCol):
         #actually only use infor kept in dicts
+        print "start extacting for [%s]" %(lvCol[0][0])
         EdgeFeature = EdgeFeatureC()
         edge = lvCol[0][0]
         EdgeFeature.edge = edge

@@ -26,6 +26,7 @@ class EdgeFeatureExtractorC(cxBaseC):
         self.EdgeObjIn = ""
         self.FbDumpIn = ""
         self.FaccDir = ""
+        self.MaxOccurPerEdge = 1000
         return
     
     def SetConf(self,ConfIn):
@@ -37,6 +38,7 @@ class EdgeFeatureExtractorC(cxBaseC):
         self.EdgeObjIn = conf.GetConf('in')
         self.FbDumpIn = conf.GetConf('fbdumpin')
         self.FaccDir = conf.GetConf('faccdir')
+        self.MaxOccurPerEdge = int(conf.GetConf('maxoccurperedge',self.MaxOccurPerEdge))
         
         
     @staticmethod
@@ -46,6 +48,7 @@ class EdgeFeatureExtractorC(cxBaseC):
     def Extract(self,DumpDisk = False):
         
         KeyReader = KeyFileReaderC()
+        KeyReader.MaxLinePerKey = self.MaxOccurPerEdge
         KeyReader.open(self.EdgeObjIn)
         
         if DumpDisk:

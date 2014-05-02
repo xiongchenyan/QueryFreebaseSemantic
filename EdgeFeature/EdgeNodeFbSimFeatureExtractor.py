@@ -159,7 +159,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         
         self.hTargetObj = {}
         self.ObjInforDir = ""
-        self.MaxOccurPerEdge = 100
+        
         self.CtfCenter = TermCtfC()
         
         
@@ -175,7 +175,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
             os.makedirs(self.ObjInforDir)
             
         conf =cxConf(ConfIn)
-        self.MaxOccurPerEdge = int(conf.GetConf('maxoccurperedge',self.MaxOccurPerEdge))
+        
         print "start load term ctf"
         self.CtfCenter.Load((conf.GetConf('ctf')))
         print "term ctf load [%d] term" %(len(self.CtfCenter.hTermCtf))
@@ -246,7 +246,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         
         
         lvCol = lvCol[:self.MaxOccurPerEdge]
-       
+        
         EdgeFeature = EdgeFeatureC()
         EdgeFeature.edge = lvCol[0][0]
         print "extracting for [%s]" %(EdgeFeature.edge)
