@@ -217,14 +217,16 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
             ThisObjId = lvColObj[0][0]
             if not ThisObjId in self.hTargetObj:
                 continue
+            print "read target obj [%s]" %(ThisObjId)
             ObjInfor = FbDumpObjInforC()
             ObjInfor.ObjId = ThisObjId
             OutName = self.ObjInforDir + "/" + ObjInfor.GetFname()
             if os.path.isfile(OutName):
                 continue
-            print "read target obj [%s]" %(ThisObjId)
+            
             ObjInfor = FbDumpObjInforC(lvColObj)
             ObjInfor.dump(OutName)
+            print "new obj, dumped"
             cnt += 1
             ObjInfor.clear()
             del lvColObj[:] 
