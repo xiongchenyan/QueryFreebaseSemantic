@@ -195,11 +195,11 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
         pb = 1
         pab = 1
         if ObjA in self.hObjCnt:
-            pa = self.hObjCnt[ObjA]
+            pa = max(pa,self.hObjCnt[ObjA])
         if ObjB in self.hObjCnt:
-            pb = self.hObjCnt[ObjB]
+            pb = max(pb,self.hObjCnt[ObjB])
         if PairKey in self.hObjPairCnt:
-            pab = self.hObjPairCnt[PairKey][UseIndex]
+            pab = max(pab,self.hObjPairCnt[PairKey][UseIndex])
         pa /= self.FaccTotal
         pb /= self.FaccTotal
         pab /= self.FaccTotal

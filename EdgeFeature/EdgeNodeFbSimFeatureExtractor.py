@@ -293,7 +293,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         hFeature = {}
         score = 0
         for ObjInforA,ObjInforB in lObjPair:
-            score += LmBaseC.TfIdfCosine(ObjInforA.DespLm,  ObjInforB.DespLm)
+            score += LmBaseC.TfIdfCosine(ObjInforA.DespLm,  ObjInforB.DespLm,self.CtfCenter)
         score /= len(lObjPair)
         hFeature['AvgObjTextSim'] = score
         
