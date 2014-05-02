@@ -53,6 +53,7 @@ import math
 
 class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
     def Init(self):
+        super(EdgeNodeFaccSimFeatureExtractorC,self).Init()        
         self.UWSize = 100
 #         self.hEdge = {} #edge -> cnt in occur
 #         self.hObjPairToEdge = {}
