@@ -161,12 +161,13 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
         self.ObjInforDir = ""
         
         self.CtfCenter = TermCtfC()
+        self.MakeObjInfor = True
         
         
     @staticmethod
     def ShowConf():
         EdgeFeatureExtractorC.ShowConf()
-        print "maxoccurperedge\nctf"
+        print "maxoccurperedge\nctf\nmakeobjinfor 1"
         
     def SetConf(self,ConfIn):
         super(EdgeNodeFbSimFeatureExtractorC,self).SetConf(ConfIn)
@@ -175,7 +176,7 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
             os.makedirs(self.ObjInforDir)
             
         conf =cxConf(ConfIn)
-        
+        self.MakeObjInfor = bool(int(conf.GetConf('makeobjinfor',1)))
         print "start load term ctf"
         self.CtfCenter.Load((conf.GetConf('ctf')))
         print "term ctf load [%d] term" %(len(self.CtfCenter.hTermCtf))
@@ -235,8 +236,9 @@ class EdgeNodeFbSimFeatureExtractorC(EdgeFeatureExtractorC):
     
     
     def Extract(self,DumpDisk = False):
-        self.LoadTargetObj()
-        self.MakeTargetObjInfor()
+        if self.MakeObjInfor:
+            self.LoadTargetObj()
+            self.MakeTargetObjInfor()
         return super(EdgeNodeFbSimFeatureExtractorC,self).Extract(DumpDisk)
         
         
