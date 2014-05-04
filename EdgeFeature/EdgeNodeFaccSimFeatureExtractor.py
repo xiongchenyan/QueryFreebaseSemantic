@@ -104,6 +104,12 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
         for lFacc in FaccReader:
             self.UpdateOneFacc(lFacc)
             del lFacc[:]
+        
+        
+        out = open(self.OutDir + "/facccorrelation",'w')
+        pickle.dump(self.hObjCnt,out)
+        pickle.dump(self.hObjPairCnt,out)
+        out.close()
             
         print "read facc data finished"        
         return True
@@ -193,16 +199,16 @@ class EdgeNodeFaccSimFeatureExtractorC(EdgeFeatureExtractorC):
         PairKey = ObjA + "\t" + ObjB
         pa = 1
         pb = 1
-        pab = 1
         if ObjA in self.hObjCnt:
             pa = max(pa,self.hObjCnt[ObjA])
         if ObjB in self.hObjCnt:
             pb = max(pb,self.hObjCnt[ObjB])
-        if PairKey in self.hObjPairCnt:
-            pab = max(pab,self.hObjPairCnt[PairKey][UseIndex])
+        
         pa /= self.FaccTotal
         pb /= self.FaccTotal
-        pab /= self.FaccTotal
+        pab = pa * pb
+        if PairKey in self.hObjPairCnt:
+            pab = max(pab,self.hObjPairCnt[PairKey][UseIndex]/self.FaccTotal)
         return PMI(pa,pb,pab)   
             
     def EdgeFeatureOutName(self):
