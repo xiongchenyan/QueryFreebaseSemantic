@@ -16,6 +16,7 @@ from FreebaseDump.FbDumpBasic   import *
 from FreebaseDump.FbDumpReader import *
 import pickle
 import json
+import math
 
 class EdgeOccurFetcherC(cxBaseC):
     def Init(self):
@@ -46,7 +47,7 @@ class EdgeOccurFetcherC(cxBaseC):
     def GetAllInstanceObj(self,lvCol):
         lObj = []
         for vCol in lvCol:
-            if len(lObj) >= self.MaxOccurPerEdge:
+            if len(lObj) >= math.sqrt(self.MaxOccurPerEdge):
                 break
             if IsInstanceEdge(vCol[1]):
                 ObjId = GetId(vCol[2])
@@ -105,6 +106,8 @@ class EdgeOccurFetcherC(cxBaseC):
                         print >>out, edge + "\t" + lObjId[i] + "\t" + lObjId[j]
                         EdgeCnt += 1
                         self.hTargetEdge[edge] += 1
+                        if self.hTargetEdge[edge] >= self.MaxOccurPerEdge:
+                            break
                         
             cnt += 1
             if 0 == cnt % 100000:
