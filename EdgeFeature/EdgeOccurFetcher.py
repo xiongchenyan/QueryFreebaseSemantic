@@ -23,10 +23,11 @@ class EdgeOccurFetcherC(cxBaseC):
         self.TargetEdgePath = ""
         self.DumpIn = ""
         self.OutName = ""
+        self.MaxOccurPerEdge = 10000
     
     @staticmethod
     def ShowConf():
-        print "targetedgein\ndumpin\nout"
+        print "targetedgein\ndumpin\nout\nmaxoccurperedge 10000"
         
         
     def SetConf(self,ConfIn):
@@ -34,7 +35,7 @@ class EdgeOccurFetcherC(cxBaseC):
         self.TargetEdgePath = conf.GetConf('targetedgein')
         self.DumpIn = conf.GetConf('dumpin')
         self.OutName = conf.GetConf('out')
-        
+        self.MaxOccurPerEdge = int(conf.GetConf('maxoccurperedge',self.MaxOccurPerEdge))
         EdgeIn = open(self.TargetEdgePath)
         self.hTargetEdge = pickle.load(EdgeIn)
         print "load [%d] target edge" %(len(self.hTargetEdge))
@@ -43,10 +44,9 @@ class EdgeOccurFetcherC(cxBaseC):
     
     
     def GetAllInstanceObj(self,lvCol):
-        MaxInstance = 500
         lObj = []
         for vCol in lvCol:
-            if len(lObj) > MaxInstance:
+            if len(lObj) >= self.MaxOccurPerEdge:
                 break
             if IsInstanceEdge(vCol[1]):
                 ObjId = GetId(vCol[2])
@@ -75,11 +75,14 @@ class EdgeOccurFetcherC(cxBaseC):
             for vCol in lvCol:
                 
                 if vCol[1] in self.hTargetEdge:
+                    if self.hTargetEdge[vCol[1]] >= self.MaxOccurPerEdge:
+                        continue
                     print "get target edge [%s]" %(vCol[1])
                     ObjA = GetId(vCol[0])
                     ObjB = GetId(vCol[2])
                     if ("" != ObjA) & ("" != ObjB):
                         print >>out, vCol[1] + "\t" + ObjA + "\t" + ObjB
+                        self.hTargetEdge[vCol[1]] += 1
                         EdgeCnt += 1
 #                 else:
 #                     print "edge [%s] not needed" %(vCol[1])
@@ -88,8 +91,11 @@ class EdgeOccurFetcherC(cxBaseC):
             #add: output instance occur of cotype/edge            
             
             
-            if ('cotype/' + lvCol[0][0]) in self.hTargetEdge:
-                edge = 'cotype/' + lvCol[0][0]
+            if ('cotype' + lvCol[0][0]) in self.hTargetEdge:
+                
+                edge = 'cotype' + lvCol[0][0]
+                if self.hTargetEdge[edge] >= self.MaxOccurPerEdge:
+                    continue
                 print "get target edge [%s]" %(edge)
                 lObjId = self.GetAllInstanceObj(lvCol)
                 for i in range(len(lObjId)):
@@ -98,6 +104,7 @@ class EdgeOccurFetcherC(cxBaseC):
                             continue
                         print >>out, edge + "\t" + lObjId[i] + "\t" + lObjId[j]
                         EdgeCnt += 1
+                        self.hTargetEdge[edge] += 1
                         
             cnt += 1
             if 0 == cnt % 100000:

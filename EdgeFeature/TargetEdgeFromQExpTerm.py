@@ -59,7 +59,7 @@ for line in open(sys.argv[1]):
                 continue
             if not edge in hEdge:                
                 hEdge[edge] = 0
-            hEdge[edge] += 1
+#             hEdge[edge] += 1
 #             print "get edge [%s]" %(edge)
             
 
