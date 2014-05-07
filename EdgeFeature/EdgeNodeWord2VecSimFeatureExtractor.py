@@ -136,10 +136,10 @@ class EdgeNodeWord2VecSimFeatureExtractorC(EdgeFeatureExtractorC):
     
     def ExtractObjWord2VecFeature(self,lObjPair):
         score = 0
-        for A,B in lObjPair:
-            score += Word2VecC.cosine(A, B)
-        score /= float(len(lObjPair))
-        
+        if len(lObjPair) != 0:            
+            for A,B in lObjPair:
+                score += Word2VecC.cosine(A, B)
+            score /= float(len(lObjPair))        
         hFeature = {}
         hFeature['AvgObjWord2VecSim'] = score
         return hFeature
