@@ -55,6 +55,7 @@ import pickle
 import ntpath
 from copy import deepcopy
 import json
+from sys import stderr
 class FbDumpObjInforC(object):
     #the class to keep object infor:
         #Lm of desp
@@ -102,14 +103,18 @@ class FbDumpObjInforC(object):
         try:
             InFile = open(InName)
         except IOError:
-            print "obj's infor dump [%s] file open failed" %(InName)
+            print >> stderr, "obj's infor dump [%s] file open failed" %(InName)
             return False
         self.ObjId = FbDumpObjInforC.ReverseIdFromFName(InName)
-        self.hNotableType = pickle.load(InFile)
-        self.DespLm.hTermTF = pickle.load(InFile)
-        self.DespLm.CalcLen()
-        self.DomainLm.hTermTF = pickle.load(InFile)
-        self.DomainLm.CalcLen()
+        try:
+            self.hNotableType = pickle.load(InFile)
+            self.DespLm.hTermTF = pickle.load(InFile)
+            self.DespLm.CalcLen()
+            self.DomainLm.hTermTF = pickle.load(InFile)
+            self.DomainLm.CalcLen()
+        except (EOFError, IOError):
+            print >> stderr, "pickle load [%s] failed" %(InName)
+            return False
         return True
     
     
