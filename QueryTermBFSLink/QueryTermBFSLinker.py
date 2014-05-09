@@ -14,7 +14,7 @@ from GoogleFreebaseAPI.BfsQueryFreebase import *
 from base.ExpTerm import *
 from IndriRelate.IndriInferencer import LmBaseC
 from copy import deepcopy
-
+import math
 class QueryTermBFSLinkerC(BfsQueryFreebaseC):
     def SetConf(self,ConfIn):
         super(QueryTermBFSLinkerC,self).SetConf(ConfIn)
@@ -25,7 +25,7 @@ class QueryTermBFSLinkerC(BfsQueryFreebaseC):
         return True
     
         
-    def ProcessPerObj(self,lPath,FbObj,qid,query):
+    def ProcessPerObj(self, lPath,FbObj,prob,qid,query):
         #form a expterm for each term in FbObj's name and desp
         #output to QTermOut
         expterm = ExpTermC()
@@ -40,26 +40,25 @@ class QueryTermBFSLinkerC(BfsQueryFreebaseC):
         DespLm = LmBaseC(desp)
         
         
-        print "q[%s] obj [%s] get [%d] in name [%d] in desp" %(query,
-                                                               FbObj.GetId().encode('utf-8','ignore'),
-                                                               len(NameLm.hTermTF),
-                                                               len(DespLm.hTermTF))
-        print "name[%s] desp [%s]" %(name.encode('utf-8','ignore'),
-                                     desp.encode('utf-8','ignore'))
+#         print "q[%s] obj [%s] get [%d] in name [%d] in desp" %(query,
+#                                                                FbObj.GetId().encode('utf-8','ignore'),
+#                                                                len(NameLm.hTermTF),
+#                                                                len(DespLm.hTermTF))
+#         print "name[%s] desp [%s]" %(name.encode('utf-8','ignore'),
+#                                      desp.encode('utf-8','ignore'))
         NameFeatureName = json.dumps(lPath + ['name'])
         for term in NameLm.hTermTF:
             ThisExpTerm = deepcopy(expterm)
             ThisExpTerm.term = term
-            ThisExpTerm.hFeature[NameFeatureName] = NameLm.GetTFProb(term)
+            ThisExpTerm.hFeature[NameFeatureName] = prob + math.log(NameLm.GetTFProb(term))
             print >> self.QTermOut, ThisExpTerm.dump()
         
         DespFeatureName = json.dumps(lPath + ['desp'])
         for term in DespLm.hTermTF:
             ThisExpTerm = deepcopy(expterm)
             ThisExpTerm.term = term
-            ThisExpTerm.hFeature[DespFeatureName] = DespLm.GetTFProb(term)
+            ThisExpTerm.hFeature[DespFeatureName] = prob + math.log(DespLm.GetTFProb(term))
             print >> self.QTermOut, ThisExpTerm.dump()          
-        
         return True
     
     
