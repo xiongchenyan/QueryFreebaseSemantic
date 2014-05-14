@@ -50,8 +50,10 @@ class QuerySubgraphTargetTermFilterC(DFSerC):
         
     
     def Process(self,InName):
+        print "start read expq"
         llExpTerm = ReadQExpTerms(InName)
         for lExpTerm in llExpTerm:
+            print "processing q [%s]" %(lExpTerm[0].qid)
             self.ProcessPerQ(lExpTerm)
         return True
     
@@ -61,18 +63,24 @@ class QuerySubgraphTargetTermFilterC(DFSerC):
         OutName = self.OutDir + '/QuerySubgraph_' + qid
         
         InitGraph = GraphC()
-        InitGraph.ReadFromSimpleEdgeFile(InName)
+        print "reading the graph from [%s]" %(InName)
+        if not InitGraph.ReadFromSimpleEdgeFile(InName):
+            return False
+        print "reversing it"
         ReverseGraph = InitGraph.GetReverse()
         InitGraph.clear()
+        print "marking start node"
         lStartNodeId = self.MarkStartNode(ReverseGraph,lExpTerm)
-        
+        print "[%d] start node" %(len(lStartNodeId))
         for StId in lStartNodeId:
+            print "dfsing from [%d]" %(StId)
             self.DFS(StId, [], ReverseGraph)
             #will update the hUsefulEdge
-            
+        print "filtering not useful ege"    
         ReverseGraph.DiscardNoneTargetEdge(self.hUsefulEdge)
         ResGraph = ReverseGraph.GetReverse()
         ReverseGraph.clear()
+        print "dumping res to [%s]" %(OutName)
         ResGraph.OutSimpleEdgeFile(OutName)
         ResGraph.clear()
         print "query [%s] finished" %(qid)
