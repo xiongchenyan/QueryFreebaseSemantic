@@ -9,7 +9,7 @@ inherited from BfsQueryFreebase
 import site
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib/')
 site.addsitedir('/bos/usr0/cx/PyCode/GoogleAPI/')
-site.addsitedir('/bos/usr0/cx/PyCode/QueryExpansion')
+# site.addsitedir('/bos/usr0/cx/PyCode/QueryExpansion')
 site.addsitedir('/bos/usr0/cx/PyCode/QueryFreebaseSemantic')
 from cxBase.base import cxConf,cxBaseC,DiscardNonAlphaNonDigit
 import json
@@ -25,9 +25,10 @@ class QuerySubgraphConstructorC(BfsQueryFreebaseC):
     def SetConf(self,ConfIn):
         super(QuerySubgraphConstructorC,self).SetConf(ConfIn)
         
-        OutName = self.WorkDir + "/QuerySubgraph"
-        self.QSubgraphOut = open(OutName,'w')  
-        
+#         OutName = self.WorkDir + "/QuerySubgraph"
+        self.OutName = ""
+#         self.QSubgraphOut = open(OutName,'w')  
+        self.CurrentQid = -1
         return True
     
     def CleanUp(self):
@@ -93,10 +94,23 @@ class QuerySubgraphConstructorC(BfsQueryFreebaseC):
     def ProcessInitObj(self,path,FbObj,prob,qid,query):
         #just out qid_query-obj-edgetype(the last in path)-score (the prob)
 #         print "init searched obj [%s][%s]" %(FbObj.GetId(),FbObj.GetName())
+        
+        if qid != self.CurentQid:
+            if -1 != self.CurrentQid:
+                self.QSubgraphOut.close()
+            self.CurrentQid = qid
+            self.OutName = self.WordDir + '/QuerySubgraph_%d' %(self.CurrentQid)
+            self.QSubgraphOut = open(self.OutName,'w')
+            
+            
+
+
         print >> self.QSubgraphOut, "%s_%s\t%s\t%s\t%f" %(qid,query,
                                                           FbObj.GetId(),
                                                           path[len(path)-1],
                                                           prob)
+        
+        
         return True
     
     
