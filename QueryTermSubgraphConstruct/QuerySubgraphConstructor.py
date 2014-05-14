@@ -76,7 +76,7 @@ class QuerySubgraphConstructorC(BfsQueryFreebaseC):
             print >> self.QSubgraphOut,"%s\t%s\t%s\t%f" %(FbObj.GetId(),
                                                           ObjId,
                                                           edge,
-                                                          math.log(hEdgeProb[edge])
+                                                          hEdgeProb[edge]
                                                           )
             
         lCoTypeObj = self.ExpandTypeNeighbor(FbObj)
@@ -85,7 +85,7 @@ class QuerySubgraphConstructorC(BfsQueryFreebaseC):
             print >> self.QSubgraphOut,"%s\t%s\t%s\t%f" %(FbObj.GetId(),
                                                           ObjId,
                                                           edge,
-                                                          math.log(hEdgeProb[edge]))
+                                                          hEdgeProb[edge])
             
         
         return True
