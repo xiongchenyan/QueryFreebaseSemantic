@@ -10,6 +10,7 @@ import site
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib/')
 site.addsitedir('/bos/usr0/cx/PyCode/GoogleAPI/')
 site.addsitedir('/bos/usr0/cx/PyCode/QueryExpansion')
+site.addsitedir('/bos/usr0/cx/PyCode/QueryFreebaseSemantic')
 from cxBase.base import cxConf,cxBaseC,DiscardNonAlphaNonDigit
 import json
 from GoogleFreebaseAPI.BfsQueryFreebase import *

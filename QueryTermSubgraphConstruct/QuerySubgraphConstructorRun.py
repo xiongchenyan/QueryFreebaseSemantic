@@ -9,6 +9,7 @@ import site
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib/')
 site.addsitedir('/bos/usr0/cx/PyCode/GoogleAPI/')
 site.addsitedir('/bos/usr0/cx/PyCode/QueryExpansion')
+site.addsitedir('/bos/usr0/cx/PyCode/QueryFreebaseSemantic')
 
 from QueryTermSubgraphConstruct.QuerySubgraphConstructor import *
 import sys
