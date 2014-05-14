@@ -63,19 +63,20 @@ class QuerySubgraphTargetTermFilterC(DFSerC):
         InitGraph = GraphC()
         InitGraph.ReadFromSimpleEdgeFile(InName)
         ReverseGraph = InitGraph.GetReverse()
-        
+        InitGraph.clear()
         lStartNodeId = self.MarkStartNode(ReverseGraph,lExpTerm)
         
         for StId in lStartNodeId:
             self.DFS(StId, [], ReverseGraph)
             #will update the hUsefulEdge
             
-        self.DiscardNoneUsefulEdge(ReverseGraph,self.hUsefulEdge)
+        ReverseGraph.DiscardNoneTargetEdge(self.hUsefulEdge)
         ResGraph = ReverseGraph.GetReverse()
-        
+        ReverseGraph.clear()
         ResGraph.OutSimpleEdgeFile(OutName)
-        
+        ResGraph.clear()
         print "query [%s] finished" %(qid)
+        
         return True
     
     
