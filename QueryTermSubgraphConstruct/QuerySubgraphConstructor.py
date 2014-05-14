@@ -99,7 +99,7 @@ class QuerySubgraphConstructorC(BfsQueryFreebaseC):
             if -1 != self.CurrentQid:
                 self.QSubgraphOut.close()
             self.CurrentQid = qid
-            self.OutName = self.WorkDir + '/QuerySubgraph_%d' %(self.CurrentQid)
+            self.OutName = self.WorkDir + '/QuerySubgraph_%s' %(self.CurrentQid)
             self.QSubgraphOut = open(self.OutName,'w')
             
             

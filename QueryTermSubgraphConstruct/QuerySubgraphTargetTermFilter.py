@@ -81,15 +81,25 @@ class QuerySubgraphTargetTermFilterC(DFSerC):
     
     def ProcessCurrentNode(self,CurrentNodeId,lPath,Graph):
         #if current node is a query node, then mark all edge in lpath as useful
+        if not self.IsAQueryNodeName(Graph.lNode[CurrentNodeId].name):
+            return True
         
+        for edge in lPath:
+            self.hUsefulEdge[edge] = True       
         return True
     
+    def IsAQueryNodeName(self,name):
+        if '_' in name:
+            return True
+        return False
     
     def MarkStartNode(self,Graph,lExpTerm):
         #get all term nodein lExpTerm, and mark as start node
         lStartNodeId = []
-        
-        
+        for ExpTerm in lExpTerm:
+            term = ExpTerm.term
+            if term in Graph.hNode:
+                lStartNodeId.append(Graph.hNode[term])
         return lStartNodeId
     
     
