@@ -36,6 +36,7 @@ class QuerySubgraphTargetTermFilterC(DFSerC):
         super(QuerySubgraphTargetTermFilterC,self).Init()
         self.GraphDumpDir = ""
         self.OutDir = ""
+        self.hUsefulEdge = {}
         
     @staticmethod
     def ShowConf():
@@ -45,6 +46,62 @@ class QuerySubgraphTargetTermFilterC(DFSerC):
         conf = cxConf(ConfIn)
         self.GraphDumpDir = conf.GetConf('graphdumpdir')
         self.OutDir = conf.GetConf('outdir')
+        
+        
+    
+    def Process(self,InName):
+        llExpTerm = ReadQExpTerms(InName)
+        for lExpTerm in llExpTerm:
+            self.ProcessPerQ(lExpTerm)
+        return True
+    
+    def ProcessPerQ(self,lExpTerm):
+        qid = lExpTerm[0].qid
+        InName = self.GraphDumpDir + '/QuerySubgraph_' + qid
+        OutName = self.OutDir + '/QuerySubgraph_' + qid
+        
+        InitGraph = GraphC()
+        InitGraph.ReadFromSimpleEdgeFile(InName)
+        ReverseGraph = InitGraph.GetReverse()
+        
+        lStartNodeId = self.MarkStartNode(ReverseGraph,lExpTerm)
+        
+        for StId in lStartNodeId:
+            self.DFS(StId, [], ReverseGraph)
+            #will update the hUsefulEdge
+            
+        self.DiscardNoneUsefulEdge(ReverseGraph,self.hUsefulEdge)
+        ResGraph = ReverseGraph.GetReverse()
+        
+        ResGraph.OutSimpleEdgeFile(OutName)
+        
+        print "query [%s] finished" %(qid)
+        return True
+    
+    
+    def ProcessCurrentNode(self,CurrentNodeId,lPath,Graph):
+        #if current node is a query node, then mark all edge in lpath as useful
+        
+        return True
+    
+    
+    def MarkStartNode(self,Graph,lExpTerm):
+        #get all term nodein lExpTerm, and mark as start node
+        lStartNodeId = []
+        
+        
+        return lStartNodeId
+    
+    
+    def DiscardNoneUsefulEdge(self,Graph,hTargetEdge):
+        Graph.DiscardNoneTargetEdge(hTargetEdge)
+        return True
+    
+    
+    
+    
+    
+    
         
         
     
