@@ -37,9 +37,7 @@ class QuerySubgraphConstructorC(BfsQueryFreebaseC):
         
     def ProcessPerObj(self,lPath,FbObj,prob,qid,query):
         
-        #if it is the last level, then do not expand
-        if len(lPath) >= self.BFSLvl:
-            return True
+
         
         #api left for sub class to process a bfs'd result. like vote up a term in FbObj's name
 #         print "get obj[%s][%s] via [%s]" %(FbObj.GetId(),FbObj.GetName(),json.dumps(lPath))
@@ -67,7 +65,9 @@ class QuerySubgraphConstructorC(BfsQueryFreebaseC):
                                                           'objdesp',
                                                           math.log(DespLm.GetTFProb(term)))
             
-            
+        #if it is the last level, then do not expand
+        if len(lPath) >= self.BFSLvl:
+            return True    
         #2,3
         lNeighborObj = self.ExpandObjNeighbor(FbObj)
         hEdgeProb = self.CalculateEdgeProb(lNeighborObj)
