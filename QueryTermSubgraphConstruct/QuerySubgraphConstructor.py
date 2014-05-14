@@ -35,7 +35,7 @@ class QuerySubgraphConstructorC(BfsQueryFreebaseC):
         self.QSubgraphOut.close()
         
         
-    def ProcessPerObj(self,lPath,FbObj,qid,query):
+    def ProcessPerObj(self,lPath,FbObj,prob,qid,query):
         
         #if it is the last level, then do not expand
         if len(lPath) >= self.BFSLvl:
