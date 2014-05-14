@@ -92,7 +92,7 @@ class QuerySubgraphConstructorC(BfsQueryFreebaseC):
     
     def ProcessInitObj(self,path,FbObj,prob,qid,query):
         #just out qid_query-obj-edgetype(the last in path)-score (the prob)
-        print "init searched obj [%s][%s]" %(FbObj.GetId(),FbObj.GetName())
+#         print "init searched obj [%s][%s]" %(FbObj.GetId(),FbObj.GetName())
         print >> self.QSubgraphOut, "%s_%s\t%s\t%s\t%f" %(qid,query,
                                                           FbObj.GetId(),
                                                           path[len(path)-1],
