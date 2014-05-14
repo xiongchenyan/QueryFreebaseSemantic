@@ -95,7 +95,7 @@ class QuerySubgraphConstructorC(BfsQueryFreebaseC):
         print "init searched obj [%s][%s]" %(FbObj.GetId(),FbObj.GetName())
         print >> self.QSubgraphOut, "%s_%s\t%s\t%s\t%f" %(qid,query,
                                                           FbObj.GetId(),
-                                                          path[len(path-1)],
+                                                          path[len(path)-1],
                                                           prob)
         return True
     
