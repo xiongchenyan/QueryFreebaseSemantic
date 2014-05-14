@@ -95,7 +95,7 @@ class QuerySubgraphConstructorC(BfsQueryFreebaseC):
         #just out qid_query-obj-edgetype(the last in path)-score (the prob)
 #         print "init searched obj [%s][%s]" %(FbObj.GetId(),FbObj.GetName())
         
-        if qid != self.CurentQid:
+        if qid != self.CurrentQid:
             if -1 != self.CurrentQid:
                 self.QSubgraphOut.close()
             self.CurrentQid = qid
