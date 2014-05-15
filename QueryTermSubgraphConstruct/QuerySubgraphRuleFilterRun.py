@@ -12,7 +12,7 @@ site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')
 site.addsitedir('/bos/usr0/cx/PyCode/GoogleAPI')
 site.addsitedir('/bos/usr0/cx/PyCode/QueryFreebaseSemantic')
 
-from QueryTermSubgraphConstruct.QuerySubgraphRuleFileter import QuerySubgraphRuleFilterC
+from QueryTermSubgraphConstruct.QuerySubgraphRuleFilter import QuerySubgraphRuleFilterC
 
 
 import sys
