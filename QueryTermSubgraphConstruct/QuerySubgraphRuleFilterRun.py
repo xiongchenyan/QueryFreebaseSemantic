@@ -17,7 +17,7 @@ from QueryTermSubgraphConstruct.QuerySubgraphRuleFilter import QuerySubgraphRule
 
 import sys
 
-if 2 != len(sys.argv[1]):
+if 2 != len(sys.argv):
     print "1 conf"
     QuerySubgraphRuleFilterC.ShowConf()
     sys.exit()
