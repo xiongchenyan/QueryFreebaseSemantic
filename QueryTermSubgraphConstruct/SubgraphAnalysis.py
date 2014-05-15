@@ -7,9 +7,9 @@ output: for now, the #of node, # of edge, # of edge type, top 5 edge category, i
 
 
 import site
-site.addsitedir('/bos/user0/cx/PyCode/cxPyLib')
-site.addsitedir('/bos/user0/cx/PyCode/GoogleAPI')
-site.addsitedir('/bos/user0/cx/PyCode/QueryFreebaseSemantic')
+site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')
+site.addsitedir('/bos/usr0/cx/PyCode/GoogleAPI')
+site.addsitedir('/bos/usr0/cx/PyCode/QueryFreebaseSemantic')
 
 from GraphBase.base import *
 from FreebaseDump.FbDumpBasic import GetDomain
