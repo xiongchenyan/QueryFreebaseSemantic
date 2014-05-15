@@ -66,8 +66,10 @@ class QuerySubgraphTargetTermFilterC(DFSerC):
         print "reading the graph from [%s]" %(InName)
         if not InitGraph.ReadFromSimpleEdgeFile(InName):
             return False
+        InitGraph.OutSimpleEdgeFile(OutName +"_init")
         print "reversing it"
         ReverseGraph = InitGraph.GetReverse()
+        ReverseGraph.OutSimpleEdgeFile(OutName+'_reverse')
         InitGraph.clear()
         print "marking start node"
         lStartNodeId = self.MarkStartNode(ReverseGraph,lExpTerm)
@@ -81,13 +83,13 @@ class QuerySubgraphTargetTermFilterC(DFSerC):
             #will update the hUsefulEdge
         print "filtering not useful ege"    
         ReverseGraph.DiscardNoneTargetEdge(self.hUsefulEdge)
-        ReverseGraph.OutSimpleEdgeFile(OutName)
-#         
-#         ResGraph = ReverseGraph.GetReverse()
-#         ReverseGraph.clear()
-#         print "dumping res to [%s]" %(OutName)
-#         ResGraph.OutSimpleEdgeFile(OutName)
-#         ResGraph.clear()
+        ReverseGraph.OutSimpleEdgeFile(OutName + "reversed_discard")
+         
+        ResGraph = ReverseGraph.GetReverse()
+        ReverseGraph.clear()
+        print "dumping res to [%s]" %(OutName)
+        ResGraph.OutSimpleEdgeFile(OutName)
+        ResGraph.clear()
         print "query [%s] finished" %(qid)
         
         return True
