@@ -72,17 +72,22 @@ class QuerySubgraphTargetTermFilterC(DFSerC):
         print "marking start node"
         lStartNodeId = self.MarkStartNode(ReverseGraph,lExpTerm)
         print "[%d] start node" %(len(lStartNodeId))
+        
+        self.hUsefulEdge.clear()
         for StId in lStartNodeId:
             print "dfsing from [%d]" %(StId)
             self.DFS(StId, [], ReverseGraph)
+            print "now target edge size [%d]" %(len(self.hUsefulEdge))
             #will update the hUsefulEdge
         print "filtering not useful ege"    
         ReverseGraph.DiscardNoneTargetEdge(self.hUsefulEdge)
-        ResGraph = ReverseGraph.GetReverse()
-        ReverseGraph.clear()
-        print "dumping res to [%s]" %(OutName)
-        ResGraph.OutSimpleEdgeFile(OutName)
-        ResGraph.clear()
+        ReverseGraph.OutSimpleEdgeFile(OutName)
+#         
+#         ResGraph = ReverseGraph.GetReverse()
+#         ReverseGraph.clear()
+#         print "dumping res to [%s]" %(OutName)
+#         ResGraph.OutSimpleEdgeFile(OutName)
+#         ResGraph.clear()
         print "query [%s] finished" %(qid)
         
         return True
