@@ -26,4 +26,3 @@ Filter = QuerySubgraphRuleFilterC(sys.argv[1])
 Filter.Process()
 
 print "finished"
-return True
