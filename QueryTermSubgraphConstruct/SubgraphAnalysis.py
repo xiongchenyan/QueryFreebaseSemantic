@@ -50,7 +50,8 @@ for FName in lFName:
     EdgeCnt = Graph.GetNumOfEdge()
     hEdge = Graph.GetEdgeCnt()
     hDomain = CntDomainFromEdge(hEdge)
-    lDomain = hDomain.items().sort(key=lambda item: item[1], reverse = True)
+    lDomain = hDomain.items()
+    lDomain.sort(key=lambda item: item[1], reverse = True)
     
     ResStr = "%s\t%d\t%d" %(qid,NodeCnt,EdgeCnt)
     for domain,cnt in lDomain[:5]:
