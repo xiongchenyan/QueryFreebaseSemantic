@@ -28,9 +28,9 @@ def CntDomainFromEdge(hEdge):
     for item in hEdge:
         domain = GetDomain(item)
         if not domain in hDomain:
-            hDomain[domain] = 1
+            hDomain[domain] = hEdge[item]
         else:
-            hDomain[domain] += 1
+            hDomain[domain] += hEdge[item]
     return hDomain
             
 
