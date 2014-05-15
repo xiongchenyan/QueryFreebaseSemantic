@@ -53,8 +53,8 @@ for FName in lFName:
     lDomain = hDomain.items()
     lDomain.sort(key=lambda item: item[1], reverse = True)
     
-    ResStr = "%s\t%d\t%d" %(qid,NodeCnt,EdgeCnt)
-    for domain,cnt in lDomain[:5]:
+    ResStr = "%s\t%d\t%d" %(Graph.lNode[0].name,NodeCnt,EdgeCnt)
+    for domain,cnt in lDomain[:10]:
         ResStr +="\t%s_%d" %(domain,cnt)
     print >>out, ResStr
     
