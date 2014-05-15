@@ -76,6 +76,7 @@ class QuerySubgraphRuleFilterC(cxBaseC):
     
     def CotypeFilter(self,Graph):
         for i in range(len(Graph.lNode)):
+            lToDel = []
             for j in Graph.lNode[i].hChild:
                 llNewEdgeAttr = []
                 for k in range(len(Graph.lNode[i].hChild[j])):
@@ -86,7 +87,9 @@ class QuerySubgraphRuleFilterC(cxBaseC):
                 if len(llNewEdgeAttr) != 0:
                     Graph.lNode[i].hChild[j] = llNewEdgeAttr
                 else:
-                    del Graph.lNode[i].hChild[j]
+                    lToDel.append(j)
+            for j in lToDel:
+                Graph.DeleteEdge((i,j))
         return True
     
     def DomainFilter(self,Graph):
