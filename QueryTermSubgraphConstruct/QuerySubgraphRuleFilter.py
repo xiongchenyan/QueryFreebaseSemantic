@@ -79,7 +79,7 @@ class QuerySubgraphRuleFilterC(cxBaseC):
             for j in Graph.lNode[i].hChild:
                 llNewEdgeAttr = []
                 for k in range(len(Graph.lNode[i].hChild[j])):
-                    lEdgeAttr = Graph.lNode[i].hChild[j]
+                    lEdgeAttr = Graph.lNode[i].hChild[j][k]
                     if 'cotype' in lEdgeAttr[0]:
                         continue
                     llNewEdgeAttr.append(lEdgeAttr)
@@ -94,7 +94,7 @@ class QuerySubgraphRuleFilterC(cxBaseC):
             for j in Graph.lNode[i].hChild:
                 llNewEdgeAttr = []
                 for k in range(len(Graph.lNode[i].hChild[j])):
-                    lEdgeAttr = Graph.lNode[i].hChild[j]
+                    lEdgeAttr = Graph.lNode[i].hChild[j][k]
                     if GetDomain(lEdgeAttr[0]) in self.lFilterDomain:
                         continue
                     llNewEdgeAttr.append(lEdgeAttr)
