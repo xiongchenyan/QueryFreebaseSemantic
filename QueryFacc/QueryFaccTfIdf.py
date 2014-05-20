@@ -65,7 +65,7 @@ class QueryFaccTfIdfC(cxBaseC):
             qid,query = line.strip().split('\t')
             lObj = self.ProcessPerQ(query)
             for item in lObj:
-                print >> out, "%s\t%s\t%f\t%f\t%f" %(item[0],item[1],item[2],item[3],item[4])
+                print >> out, qid + "\t" + query + "%s\t%s\t%f\t%f\t%f" %(item[0],item[1],item[2],item[3],item[4])
         out.close()
         return True
     
