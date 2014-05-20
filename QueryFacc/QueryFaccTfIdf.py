@@ -49,7 +49,7 @@ class QueryFaccTfIdfC(cxBaseC):
         for FaccDoc in lFaccDoc:
             for Facc in FaccDoc.lFacc:
                 if not Facc.ObjId in hObjIdNameTf:
-                    hObjIdNameTf[Facc.ObjId] = [Facc.name,1]
+                    hObjIdNameTf[Facc.ObjId] = [Facc.entity,1]
                 else:
                     hObjIdNameTf[Facc.ObjId][1] += 1
                     
